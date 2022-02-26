@@ -1,3 +1,23 @@
 export const Colors = {
-    body: "#F5F5F7"
+    body: "#F5F5F7",
+    primaryColor: "#2e64d8",
+    primaryColorHover: "#4f85f7",
+    secondaryColor: "#73b3fb",
+    secondaryFooter: "#3b48ff",
+    thirdColor: "#00D56D",
+
+    navBottomBorder: "#dfe6edaa",
+    navHover: "#2E64D8",
+    navHoverless: "#192131",
+    navJoin: "#2051BA",
+    navJoinCurrent: "#2E64D8",
+    navJoinText: "#F6F8FD",
+    navBurgerBg: "#fff",
+    navBurger: "#121212",
+    navDropdownBG: "#EEEEEE",
+    navDropdownText: "#192131",
+    navDistText: "#2051BA",
+    navMobileHover: "#8dadf1aa",
+    navLangSelect: "#F5F5F7",
+    navLangSelectHover: "#dcdfe3",
 }
