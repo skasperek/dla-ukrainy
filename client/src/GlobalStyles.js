@@ -1,4 +1,5 @@
 import {createGlobalStyle} from "styled-components";
+import {Colors} from "./shared/styles/colors";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -11,7 +12,7 @@ html{scroll-behavior:smooth; height: 100%;}
     font-family: "Montserrat", "Roboto", sans-serif;
 }
 
-body{ background: ${p => p.theme.body}; }
+body{ background: ${Colors.body}; }
 a{ text-decoration: none; }
 
 `;

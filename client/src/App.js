@@ -6,6 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import {store, persistor} from "./redux/store";
 import i18n from "./config/language/i18n.config";
+import {Provider} from "react-redux";
 
 import HomePage from "./Areas/Home/pages/HomePage";
 
