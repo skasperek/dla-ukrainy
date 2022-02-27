@@ -16,7 +16,7 @@ class AppSocket implements OnGatewayConnection {
         try {
             const token = socket.handshake.headers.authorization;
             if (token){
-
+                
             }
         } catch (error) {
             

@@ -20,4 +20,19 @@ export const Colors = {
     navMobileHover: "#8dadf1aa",
     navLangSelect: "#F5F5F7",
     navLangSelectHover: "#dcdfe3",
+
+    tabTitle: "#67747F",
+    tabAddress: "#8B9CA8",
+    tabBorder: "#3F3D5610",
+    tabHours: "#8B9CA8",
+    tabMore: "#4287f5",
+    tabsBG: "#302F38",
+    tabsColor: "#252629",
+    tabAddonNewBG: "#2E64D850",
+    tabAddonNewColor: "#2E64D8",
+    tabAddonBestBG: "#FFF2E4",
+    tabAddonBestColor: "#FF9B3B",
+
+    loginTooltip: "#3e3d47",
+    loginTooltipText: "#F6F6F6",
 }

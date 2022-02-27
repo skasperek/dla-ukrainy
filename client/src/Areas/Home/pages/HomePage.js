@@ -1,9 +1,23 @@
 import React, {useRef} from "react";
 
 import Navbar from "../../../shared/components/navbar/navbar";
-import { MapContent, MapMenu, MapMenuButtons, MapWrapper,  } from "./style";
+import { 
+    MapContent, MapMenu, MapMenuButtons, MapWrapper, MenuTabs, MenuTabsContent,
+    SearchTab,
+    Tab,
+    TabContent,
+    TabTitle,
+    TabTitleAddons,
+    TabTitleAddon,
+    AddonTooltip,
+    AddonTooltipTail,
+    TabIMGBox,
+    TabIMG
+} from "./style";
 
 import L from "leaflet";
+import { AiFillStar } from "react-icons/ai";
+import { RiArrowDropDownLine, RiCalendarCheckFill, RiVipDiamondFill } from "react-icons/ri";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import moveInfo from "./moveInfo.css";
 
@@ -34,6 +48,32 @@ const HomePage = () => {
                     <MapMenuButtons>
                         a
                     </MapMenuButtons>
+                    <MenuTabs>
+                        <MenuTabsContent>
+                            <SearchTab>
+                                <TabIMGBox>
+                                    <TabIMG />
+                                </TabIMGBox>
+                                <Tab>
+                                    <TabContent>
+                                        <TabTitle>
+                                            <TabTitleAddons> 
+                                                <TabTitleAddon >
+                                                    <AddonTooltip><AddonTooltipTail />Idealne dopasowanie</AddonTooltip>
+                                                    <RiVipDiamondFill/> Idealny
+                                                </TabTitleAddon>
+                                                <TabTitleAddon isnew>
+                                                    <AddonTooltip><AddonTooltipTail />Obiekt można znaleźć na mapie od [x] dni.</AddonTooltip>
+                                                    <AiFillStar/> Nowe
+                                                </TabTitleAddon>
+                                            </TabTitleAddons>
+                                            <span>asdasd</span>
+                                        </TabTitle>
+                                    </TabContent>
+                                </Tab>
+                            </SearchTab>
+                        </MenuTabsContent>
+                    </MenuTabs>
                 </MapMenu>
             </MapWrapper>
         </>
