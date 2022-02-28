@@ -47,6 +47,22 @@ export const MapMenuButtons = styled.div`
     padding: 15px 15px 0 15px;
 `;
 
+export const MapMenuButton = styled.button`
+    display: flex;
+    align-items: center;
+    border: 1px solid ${Colors.tabBorder};
+    border-radius: 5px;
+    box-shadow: 0 0 5px ${Colors.tabBorder};
+    position: relative;
+    padding: 10px 20px;
+    color: ${Colors.tabTitle};
+    font-size: 16px;
+
+    &:hover{
+        cursor: pointer;
+    }
+`;
+
 export const MenuTabs = styled.div`    
     width: 100%;
     flex: 1;
@@ -224,4 +240,13 @@ export const TabIMG = styled.img.attrs({src: 'https://via.placeholder.com/60x60'
         width: 50px;
         height: 50px;
     }
+`;
+
+export const SearchTools = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 10px;
+    padding: 15px 15px 0 15px;
 `;

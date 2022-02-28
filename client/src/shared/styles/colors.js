@@ -6,6 +6,12 @@ export const Colors = {
     secondaryFooter: "#3b48ff",
     thirdColor: "#00D56D",
 
+    defaultText: "#000",
+    modalBg: "#FFFFFF",
+    scrollbar: "rgb(200,200,200)",
+    scrollbarBg: "rgb(235,235,235)",
+    modalTitle: "#121212",
+
     navBottomBorder: "#dfe6edaa",
     navHover: "#2E64D8",
     navHoverless: "#192131",

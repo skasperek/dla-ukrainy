@@ -12,16 +12,20 @@ import {
     AddonTooltip,
     AddonTooltipTail,
     TabIMGBox,
-    TabIMG
+    TabIMG,
+    MapMenuButton,
+    SearchTools
 } from "./style";
 
 import L from "leaflet";
 import { AiFillStar } from "react-icons/ai";
+import { IoAddCircleOutline } from "react-icons/io5"
 import { RiArrowDropDownLine, RiCalendarCheckFill, RiVipDiamondFill } from "react-icons/ri";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import moveInfo from "./moveInfo.css";
 import { SocketContext } from "../../../shared/ws/wsContext";
 import { GET_EVENT, GET_EVENTS } from "../../../shared/ws/events/wsEvents";
+import EventForm from "../components/EventForm";
 
 const HomePage = () => {
     const socket = useContext(SocketContext)
@@ -40,7 +44,8 @@ const HomePage = () => {
     return (
         <>
             <Navbar home/>
-            <MapWrapper blur={false}>
+            <EventForm isVisible={true} />
+            <MapWrapper blur={true}>
                 <MapContent>
                     <MapContainer 
                         whenCreated={ mapInstance => { mapRef.current = mapInstance }}
@@ -59,7 +64,7 @@ const HomePage = () => {
                 </MapContent>
                 <MapMenu showMenu={true}>
                     <MapMenuButtons>
-                        a
+                        <MapMenuButton><IoAddCircleOutline className="nav-icon" /> Dodaj</MapMenuButton>
                     </MapMenuButtons>
                     <MenuTabs>
                         <MenuTabsContent>
@@ -72,7 +77,7 @@ const HomePage = () => {
                                         <TabTitle>
                                             <TabTitleAddons> 
                                                 <TabTitleAddon >
-                                                    <AddonTooltip><AddonTooltipTail />Idealne dopasowanie</AddonTooltip>
+                                                    <AddonTooltip><AddonTooltipTail className="nav-icon"/>Idealne dopasowanie</AddonTooltip>
                                                     <RiVipDiamondFill/> Idealny
                                                 </TabTitleAddon>
                                                 <TabTitleAddon isnew>
