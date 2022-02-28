@@ -113,7 +113,16 @@ exports.devServer = ({
             hot: hot,
             compress: compress,
             https: false,
-            client: client
+            client: client,
+            // proxy: {
+            //     target: "http://[::1]:2083",
+            //     context: "/api",
+            //     secure:false,
+            //     changeOrigin:true
+            // }
+            proxy: {
+                "*": "http://[::1]:2083"
+            }
         }
     }
 }

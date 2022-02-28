@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useContext, useEffect} from "react";
 
 import Navbar from "../../../shared/components/navbar/navbar";
 import { 
@@ -20,9 +20,22 @@ import { AiFillStar } from "react-icons/ai";
 import { RiArrowDropDownLine, RiCalendarCheckFill, RiVipDiamondFill } from "react-icons/ri";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import moveInfo from "./moveInfo.css";
+import { SocketContext } from "../../../shared/ws/wsContext";
+import { GET_EVENT, GET_EVENTS } from "../../../shared/ws/events/wsEvents";
 
 const HomePage = () => {
+    const socket = useContext(SocketContext)
     const mapRef = useRef();
+
+    useEffect(() => {
+        socket.on(GET_EVENTS, (data) => {
+            console.log(data)
+        });
+
+        socket.on(GET_EVENT, (data) => {
+            console.log(data)
+        })
+    }, [socket])
 
     return (
         <>
@@ -38,10 +51,10 @@ const HomePage = () => {
                         minZoom={6}
                     >
                         <TileLayer
-                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                             <Marker position={[52.237049, 21.017532]}></Marker>
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[52.237049, 21.017532]}></Marker>
                     </MapContainer>
                 </MapContent>
                 <MapMenu showMenu={true}>

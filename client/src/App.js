@@ -9,21 +9,24 @@ import i18n from "./config/language/i18n.config";
 import {Provider} from "react-redux";
 
 import HomePage from "./Areas/Home/pages/HomePage";
+import {SocketProvider} from "./shared/ws/wsContext";
 
 const App = () => {
     return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <GlobalStyle/>
-                <I18nextProvider i18n={i18n}>
-                    <Router history={history} >
-                        <Switch>
-                            <Route exact path="/" component={HomePage}/>
-                        </Switch>
-                    </Router>
-                </I18nextProvider>
-            </PersistGate>
-        </Provider>
+        <SocketProvider>
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <GlobalStyle/>
+                    <I18nextProvider i18n={i18n}>
+                        <Router history={history} >
+                            <Switch>
+                                <Route exact path="/" component={HomePage}/>
+                            </Switch>
+                        </Router>
+                    </I18nextProvider>
+                </PersistGate>
+            </Provider>
+        </SocketProvider>
     )
 }
 

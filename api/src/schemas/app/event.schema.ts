@@ -7,13 +7,19 @@ export type EventDocument = Event & Document;
 @Schema()
 export class Event {
     
-    @Prop({type: Types.ObjectId, required: true, ref: "users"})
-    userId: string;
+    @Prop({type: String, required: true, unique: true})
+    email: string;
+
+    @Prop({type: String, required: true})
+    firstName: string;
+
+    @Prop({type: String, required: true})
+    lastName: string;
 
     @Prop({type: Number, required: true})
     type: number; //0 - oczekuje pomcy, 1-Zbiórka, 2 - Wsparcie, 3 - kierowca
 
-    @Prop({type: Number, required: true})
+    @Prop({type: String, required: true})
     about: string;
 
     @Prop({type: String})
