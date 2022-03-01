@@ -129,3 +129,245 @@ export const ModalContent = styled.div`
         padding: 0;
     }
 `;
+
+
+export const Controls = styled.div`
+    display: flex;
+    gap: 10px;
+    padding: 1.5rem;
+    justify-content: center;
+
+    @media (max-width: 350px) {
+        padding: 1.5rem 0;
+    }
+`;
+
+export const ControlButton = styled.div`
+    border-radius: 5px;
+    padding: 10px 40px;
+    border: 1px solid ${Colors.nextBtnNotReady};
+    color: ${Colors.nextBtnNotReady};
+    font: normal 300 15px/18px Roboto;
+    text-align: center;
+    width: 50%;
+    cursor: default;
+
+    ${({ready, finish}) => ready && css`
+        cursor: pointer;
+        border: none;
+        background: ${finish ? Colors.good : Colors.nextBtnBG};
+        color: ${finish ? Colors.submitText : "#dcdfe3"};
+        font-weight: 500;
+        :hover { background: ${({finish}) => finish ? Colors.goodHover : Colors.nextBtnBGHover}; }
+    `}
+
+    ${({recover}) => recover && css`
+        max-width: 100% !important;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        :hover { background: ${Colors.nextBtnBGHover}; }
+    `};
+`;
+
+
+export const ModalColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0;
+`;
+
+export const ColumnCenter = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 40px 0;
+    
+    >* {
+        width: 100%;
+    }
+`;
+
+export const ModalTitle = styled.div`
+    font: normal 500 16px/17px Roboto;
+    padding: 5px 0;
+`;
+
+export const ModalText = styled.div`
+    font: normal 300 14px/15px Roboto;
+
+    span { font-weight: 500; }
+`;
+
+export const CMContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 15px;
+`;
+
+export const CMRow_Add = styled.div`
+    margin: auto;
+    width: ${(props) => {
+        if(props.longer) return "100%"
+        else return "50%";
+    }};
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: ${props => props.center ? "center" : ""};
+`;
+
+export const DefaultLabel = styled.label`
+    position: relative;
+    width: 100%;
+    line-height: 1;
+    color: ${Colors.defaultInputText};
+
+    div {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        transition: all .1s;
+        cursor: text;
+    }
+`;
+
+// INPUT[TYPE=TEXT] <- required
+export const DefaultInput = styled.input`
+    position: relative;
+    display: flex;
+    line-height: 1rem;  
+    width: 100%;
+    background: ${Colors.defaultInputBg};
+    border-radius: ${({edgy}) => edgy ? '5px' : '12px'};
+    padding: 25px 10px 10px 15px;
+    font-size: 16px;
+    border: none;
+    appearance: textfield;
+    color: ${Colors.defaultInputText};
+    
+    :focus,
+    :valid {
+        ~div {
+            top: 12.5px;
+            left: 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: ${Colors.simpleText};
+        }
+    }
+`;
+
+export const OptionalInput = styled.input`
+    position: relative;
+    display: flex;
+    line-height: 1rem;  
+    width: 100%;
+    background: ${Colors.defaultInputBg};
+    border-radius: ${({edgy}) => edgy ? '5px' : '12px'};
+    padding: 25px 10px 10px 15px;
+    font-size: 16px;
+    border: none;
+    appearance: textfield;
+    color: ${Colors.defaultInputText};
+
+    ~div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        span {
+            font-size: 12px;
+            position: relative;
+            top: 1px;
+        }
+    }
+
+    :focus,
+    :not(:placeholder-shown) {
+        ~div {
+            top: 12.5px;
+            left: 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: ${Colors.simpleText};
+
+            span {
+                top: auto;
+            }
+        }
+    }
+`;
+
+export const DefaultTextArea = styled.textarea`
+    position: relative;
+    display: flex;
+    line-height: 1rem;  
+    width: 100%;
+    background: ${Colors.defaultInputBg};
+    border-radius: ${({edgy}) => edgy ? '5px' : '12px'};
+    padding: 25px 10px 10px 15px;
+    font-size: 16px;
+    border: none;
+    appearance: textfield;
+    color: ${Colors.defaultInputText};
+    
+    :focus,
+    :valid {
+        ~div {
+            top: 12.5px;
+            left: 14px;
+            font-size: 11px;
+            font-weight: bold;
+            color: ${Colors.simpleText};
+        }
+    }
+`;
+
+export const DefaultSelect = styled.select`
+	position: relative;
+	display: flex;
+	line-height: 1rem;
+	width: 100%;
+    background: ${Colors.defaultInputBg};
+	border-radius: ${({edgy}) => edgy ? '5px' : '12px'};
+    padding: 25px 10px 10px 10px;
+	font-size: 16px;
+	border: medium none;
+    appearance: none;
+    color: ${Colors.defaultInputText};
+
+    :focus ~ div, :valid ~ div {
+        top: 12.5px;
+        left: 14px;
+        font-size: 11px;
+        font-weight: bold;
+        color: ${Colors.simpleText};
+    }
+`;
+
+export const DefaultAutocomplete = styled.div`
+    input {
+        /* position: relative;
+        display: flex;
+        line-height: 1rem;
+        width: 100%;
+        background: ${Colors.defaultInputBg};
+        border-radius: ${({edgy}) => edgy ? '5px' : '12px'};
+        padding: 25px 10px 10px 10px;
+        font-size: 16px;
+        border: medium none;
+        appearance: none;
+        color: ${Colors.defaultInputText};  */
+    }
+`;

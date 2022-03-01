@@ -41,4 +41,18 @@ export const Colors = {
 
     loginTooltip: "#3e3d47",
     loginTooltipText: "#F6F6F6",
+
+    nextBtnBG: "#2051BA",
+    nextBtnNotReady: "#c3c6c9",
+    nextBtnBGHover: "#2960d6",
+    nextBtnText: "#FFFFFF",
+    good: "#11d69e",
+    submitText: "#F6F8FD",
+    simpleText: "#121212",
+
+    defaultInputBg: "#f5f5f7",
+    defaultInputBg2: "#e9ebf0",
+    defaultInputText: "#353b64",
+    defaultInputText2: "#B3BDCC",
+    activeDisabled: "#2e64d8aa",
 }

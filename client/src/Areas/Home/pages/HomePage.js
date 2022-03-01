@@ -59,7 +59,10 @@ const HomePage = () => {
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={[52.237049, 21.017532]}></Marker>
+                        <Marker 
+                            position={[52.237049, 21.017532]}
+                            
+                        ></Marker>
                     </MapContainer>
                 </MapContent>
                 <MapMenu showMenu={true}>
