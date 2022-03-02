@@ -20,12 +20,13 @@ import {
 import L from "leaflet";
 import { AiFillStar } from "react-icons/ai";
 import { IoAddCircleOutline } from "react-icons/io5"
-import { RiArrowDropDownLine, RiCalendarCheckFill, RiVipDiamondFill } from "react-icons/ri";
+import { RiVipDiamondFill } from "react-icons/ri";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import moveInfo from "./moveInfo.css";
 import { SocketContext } from "../../../shared/ws/wsContext";
 import { GET_EVENT, GET_EVENTS } from "../../../shared/ws/events/wsEvents";
 import EventForm from "../components/EventForm";
+import homeMarker from "../../../files/homeMarker.svg"
 
 const HomePage = () => {
     const socket = useContext(SocketContext)
@@ -41,11 +42,29 @@ const HomePage = () => {
         })
     }, [socket])
 
+    const homeIcon = new L.Icon({
+        // iconUrl: require('../img/marker-pin-person.svg'),
+        // iconRetinaUrl: require('../img/marker-pin-person.svg'),
+        iconUrl: homeMarker,
+        iconRetinaUrl: null,
+        iconAnchor: null,
+        popupAnchor: null,
+        shadowUrl: null,
+        shadowSize: null,
+        shadowAnchor: null,
+        iconSize: new L.Point(60, 75),
+        className: 'leaflet-div-icon'
+    })
+
     return (
         <>
             <Navbar home/>
-            <EventForm isVisible={true} />
-            <MapWrapper blur={true}>
+            <EventForm 
+                isVisible={false} 
+                title="Nieś pomoc"
+                description="asdasd"
+            />
+            <MapWrapper blur={false}>
                 <MapContent>
                     <MapContainer 
                         whenCreated={ mapInstance => { mapRef.current = mapInstance }}
@@ -61,8 +80,10 @@ const HomePage = () => {
                         />
                         <Marker 
                             position={[52.237049, 21.017532]}
-                            
-                        ></Marker>
+                            icon={homeIcon}
+                        >
+                            <Popup />
+                        </Marker>
                     </MapContainer>
                 </MapContent>
                 <MapMenu showMenu={true}>

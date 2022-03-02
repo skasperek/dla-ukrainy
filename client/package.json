@@ -11,15 +11,18 @@
     "leaflet-geosearch": "^3.6.0",
     "react": "^17.0.2",
     "react-autocomplete": "^1.8.1",
+    "react-calendar": "^3.7.0",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.5",
     "react-icons": "^4.3.1",
+    "react-intl-tel-input": "^8.2.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "socket.io-client": "^4.4.1",
+    "url-loader": "^4.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

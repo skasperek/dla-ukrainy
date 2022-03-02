@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import { FaTimes } from "react-icons/fa";
 import {
     ModalBackground, ModalCloseButton, ModalHeader, ModalHeaderTitle,
@@ -8,32 +8,41 @@ import {
     Controls,
     ControlButton,
     ModalColumn,
-    ColumnCenter,
-    ModalTitle,
-    ModalText, CMContent, CMRow_Add, DefaultLabel, OptionalInput, DefaultSelect, DefaultTextArea, DefaultAutocomplete
+    ColumnCenter, ErrorTooltip, ErrorTooltipTail,
+    ModalTitle, DefaultInput,
+    ModalText, CMContent, CMRow_Add, DefaultLabel, OptionalInput, DefaultSelect, DefaultTextArea, InputField
 } from "./style";
 import useForm from "../../../shared/forms/useForm";
 import ReactAutocomplete from 'react-autocomplete';
+import IntlTelInput from 'react-intl-tel-input';
+import Calendar, { MonthView, YearView } from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import phone from "./phone.css";
 import axios from "axios"
 
-const EventForm = ({
-    isVisible, onClose,
-    title, description
-}) => {
-    if (!isVisible){
+const EventForm = (props) => {
+    if (!props.isVisible){
         return null;
     }
 
-    const [suggestion, setSuggestion] = useState("")
+    const phoneVal = useRef(null);
+    const [focus, setFocus] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [suggestion, setSuggestion] = useState([])
     const stateSchema = {
-        firstName: { value: null, error: "" },
-        lastName: { value: null, error: "" },
+        firstName: { value: props.firstName ? props.firstName : null, error: "" },
+        lastName: { value: props.lastName ? props.lastName : null, error: "" },
         details: { value: null, error: ""},
-        address: { value: null, error: "" }
+        resource: { value: null, error: ""},
+        type: { value: null, error: ""},
+        address: { value: null, error: "" },
+        phone: { value: null, error: ""},
+        secondPhone: { value: null, error: "" },
     };
 
     const stateValidatorSchema = {
-       
+        type: { required: { isRequired: true, error: "type" }},
+        phone: { required: { isRequired: true, error: "type" }},
     };
 
     const onSubmitForm = (state) => {
@@ -42,22 +51,26 @@ const EventForm = ({
         console.log(state)
     }
 
-    const onSuggestionChange = (value) => {
-        let suggestions = [];
-        axios.get(`https://nominatim.openstreetmap.org/search?q=${value}&format=json&limit=3`)
-            .then((res) => {
-                const response = res.data;
+    const onSuggestionChange = async (e) => {
+        const value = e.target.value;
 
-                response.forEach((suggestion) => {
-                    suggestions.push({
-                        name: suggestion.display_name,
-                        lon: suggestion.lon,
-                        lat: suggestion.lat,
-                    });
-                });
-            })
+        if (value.length >= 4){
+            await axios.get(`https://nominatim.openstreetmap.org/search?q=${value}&format=json&limit=1`)
+                .then((res) => {
+                    const response = res.data[0];
 
-        setSuggestion(value)
+                    setSuggestion({
+                        name: response.display_name,
+                        lon: response.lon,
+                        lat: response.lat,
+                    })
+                })
+        }
+    }
+
+    const onChangeDate = date => {
+        setDate(date);
+        setFocus(false);
     }
 
     const {
@@ -65,66 +78,97 @@ const EventForm = ({
         handleOnChange, handleOnSubmit
     } = useForm(stateSchema, stateValidatorSchema, onSubmitForm);
 
+    const {type, phone, secondPhone, address} = values;
     return (
         <ModalBackground>
             <ModalContainer>
-                <ModalCloseButton pc onClick={onClose}><FaTimes/> </ModalCloseButton>
+                <ModalCloseButton pc onClick={props.onClose}><FaTimes/> </ModalCloseButton>
                 <ModalHeader>
-                    <ModalCloseButton pc onClick={onClose}><FaTimes/> </ModalCloseButton>
+                    <ModalCloseButton pc onClick={props.onClose}><FaTimes/> </ModalCloseButton>
                     <ModalHeaderTitle>
-                        <span>{title}adsadasd</span>
+                        <span>{props.title}</span>
                     </ModalHeaderTitle>
                     <ModalHeaderDesc>
-                        asdasd
+                        <span>{props.description}</span>
                     </ModalHeaderDesc>
                 </ModalHeader>
                 <ModalContent>
                     <CMContent>
                         <CMRow_Add longer>
                             <DefaultLabel>
-                                <OptionalInput name="name"/>
-                                <div>Imię i nazwisko</div>
-                            </DefaultLabel>
-                        </CMRow_Add>
-                        <CMRow_Add longer>
-                            <DefaultLabel>
                                 <DefaultSelect name="type" id="type" onChange={handleOnChange} >
-                                    <option value="" hidden selected>Podaj producenta</option>
-                                    <option value={0}>Np. Fiat</option>
-                                    <option value={1}>Np. Fiat</option>
+                                    <option value={0}>Zbiórka</option>
+                                    <option value={1}>Nocleg</option>
+                                    <option value={2}>Transport</option>
+                                    <option value={3}>Praca</option>
+                                    <option value={4}>Osoba potrzebujący pomocy</option>
                                 </DefaultSelect>
-                                <div>Imię i nazwisko właściciela</div>
+                                <div>Rodzaj oferowanej/potrzebnej pomocy</div>
                             </DefaultLabel>
+                            {errors.type && dirty.type && (
+                                <ErrorTooltip>{errors.type} <ErrorTooltipTail /></ErrorTooltip>
+                            )}
                         </CMRow_Add>
                         <CMRow_Add longer>
                             <DefaultLabel>
-                                
-                                    <ReactAutocomplete 
-                                        className="test"
-                                        items={[
-                                            { id: 'foo', label: 'foo' },
-                                            { id: 'bar', label: 'bar' },
-                                            { id: 'baz', label: 'baz' },
-                                        ]}
-                                        
-                                        shouldItemRender={(item, value) => item.label.indexOf(value) > -1}
-                                        getItemValue={item => item.label}
-                                        renderItem={(item, highlighted) =>
-                                        <div
-                                            key={item.id}
-                                            style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
-                                        >
-                                            {item.label}
-                                        </div>
-                                        }
-                                        value={suggestion}
-                                        onChange={(e) => onSuggestionChange(e.target.value)}
-                                        onSelect={value => console.log(value)}
-                                    />
-                                
-                                {/* <div>Opis działań / Oferty</div> */}
+                                <DefaultInput value={phone} required name="phone" onChange={(e) => handleOnChange(e)}/>
+                                <div>Numer telefonu</div>
+                            </DefaultLabel>
+                            {errors.phone && dirty.phone && (
+                                <ErrorTooltip>{errors.phone} <ErrorTooltipTail /></ErrorTooltip>
+                            )}
+                        </CMRow_Add>
+                        <CMRow_Add longer>
+                            <DefaultLabel>
+                                <DefaultInput value={secondPhone} required name="secondPhone" onChange={(e) => handleOnChange(e)}/>
+                                <div>Awaryjny numer telefonu</div>
                             </DefaultLabel>
                         </CMRow_Add>
+
+                        <CMRow_Add longer>
+                            <DefaultLabel>
+                                <DefaultInput type="text" value={address} name="address" required onChange={onSuggestionChange}/>
+                                <div>Adres</div>
+                            </DefaultLabel>
+                        </CMRow_Add>
+
+                        {type > 0 && 
+                            <CMRow_Add longer>
+                                <DefaultLabel>
+                                    <DefaultSelect name="count" id="count" onChange={handleOnChange} >
+                                        <option value={1}>1</option>
+                                        <option value={2}>2</option>
+                                        <option value={3}>3</option>
+                                        <option value={4}>4</option>
+                                        <option value={5}>Do uzgodnienia</option>
+                                    </DefaultSelect>
+                                    <div>Ile osób?</div>
+                                </DefaultLabel>
+                            </CMRow_Add>
+                        }
+                        {type > 0 && type < 3 &&
+                            <CMRow_Add longer>
+                                <DefaultLabel>
+                                    <DefaultInput value={phone} name="phone" onChange={(e) => handleOnChange(e)}/>
+                                    <div>Koszt</div>
+                                </DefaultLabel>
+                            </CMRow_Add>
+                        }
+                        
+                        {type > 0 && type < 4 && type != 2 && type != 3 &&
+                            <>
+                                <CMRow_Add longer>
+                                    <DefaultLabel>
+                                        <DefaultSelect name="resource" id="resource" onChange={handleOnChange} >
+                                            <option value="Dom">Dom</option>
+                                            <option value="Pokój">Pokój</option>
+                                            <option value="Łózko">Łózko</option>
+                                        </DefaultSelect>
+                                        <div>Zasób</div>
+                                    </DefaultLabel>
+                                </CMRow_Add>
+                            </>
+                        }
                         <CMRow_Add longer>
                             <DefaultLabel>
                                 <DefaultTextArea
@@ -135,9 +179,39 @@ const EventForm = ({
                                     onChange={handleOnChange}
                                     value={values.details}>
                                 </DefaultTextArea>
-                                <div>Opis działań / Oferty</div>
+                                <div>Opis działań / Oferty / Uwagi</div>
                             </DefaultLabel>
                         </CMRow_Add>
+
+                        {type < 4 && 
+                            <CMRow_Add longer>
+                                <DefaultLabel onFocus={() => setFocus(true)}>
+                                    <DefaultInput value={`${date.getDate() < 10 ? "0" : ''}${date.getDate()}/${date.getMonth() < 10 ? "0" : ''}${date.getMonth()}/${date.getFullYear()}`} placeholder="" maxLength="8" required name="lastReview" onChange={(e) => handleOnChange(e)}/>
+                                    <div>Od kiedy?</div>
+                                </DefaultLabel>
+                                {
+                                    focus && 
+                                    <>
+                                        <Calendar onChange={onChangeDate} value={date} className="calendarCarReview" />
+                                    </>
+                                }
+                            </CMRow_Add>
+                        }
+
+                        {type < 2 &&
+                            <CMRow_Add longer>
+                                <DefaultLabel onFocus={() => setFocus(true)}>
+                                    <DefaultInput value={`${date.getDate() < 10 ? "0" : ''}${date.getDate()}/${date.getMonth() < 10 ? "0" : ''}${date.getMonth()}/${date.getFullYear()}`} placeholder="" maxLength="8" required name="lastReview" onChange={(e) => handleOnChange(e)}/>
+                                    <div>Planowane zakończenie</div>
+                                </DefaultLabel>
+                                {
+                                    focus && 
+                                    <>
+                                        <Calendar onChange={onChangeDate} value={date} className="calendarCarReview" />
+                                    </>
+                                }
+                            </CMRow_Add>
+                        }
                     </CMContent>
                 </ModalContent>
                 <Controls>

@@ -356,18 +356,61 @@ export const DefaultSelect = styled.select`
     }
 `;
 
-export const DefaultAutocomplete = styled.div`
-    input {
-        /* position: relative;
-        display: flex;
-        line-height: 1rem;
-        width: 100%;
-        background: ${Colors.defaultInputBg};
-        border-radius: ${({edgy}) => edgy ? '5px' : '12px'};
-        padding: 25px 10px 10px 10px;
-        font-size: 16px;
-        border: medium none;
-        appearance: none;
-        color: ${Colors.defaultInputText};  */
+export const InputField = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: ${Colors.simpleText};
+
+    :not(:nth-last-child(1)) {
+        margin-bottom: 60px;
+    };
+    
+    ${({nobotmarg}) => nobotmarg && css`
+        margin-bottom: 0 !important;
+    `}
+
+    ${({stop}) => stop && css` margin-bottom: 0 !important;`}
+    ${({gap}) => gap && css`gap: ${gap}px;`};
+    a {
+        color: #000;
+    };
+
+    .arrow.down {
+        color: ${Colors.defaultText};
     }
+
+    .country-list {
+        background: ${Colors.simpleBg} !important;
+        border: 1px solid ${Colors.simpleBg} !important;
+    }
+
+    input[type=tel] {
+        border: 1px solid ${p => p.theme.classyInputBorder};
+        background: ${p => p.theme.classyInputBg};
+        color: ${p => p.theme.classyInputText};
+        padding-left: 60px !important;
+    }
+`;
+
+
+export const ErrorTooltip = styled.div`
+    position: absolute;
+    top: -100%;
+    background: ${Colors.loginTooltip};
+    color: ${Colors.loginTooltipText};
+    padding: 10px 30px;
+    border-radius: 5px;
+    z-index: 2;
+`;
+
+export const ErrorTooltipTail = styled.div`
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    background: ${Colors.loginTooltip};
+    z-index: 3;
 `;

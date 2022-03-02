@@ -55,4 +55,7 @@ export const Colors = {
     defaultInputText: "#353b64",
     defaultInputText2: "#B3BDCC",
     activeDisabled: "#2e64d8aa",
+
+    loginTooltip: "#3e3d47",
+    loginTooltipText: "#F6F6F6"
 }
